@@ -6,12 +6,9 @@ void setup() {
 }
 
 void loop() {
-    motorForward(50);  // 50% speed
-    delay(2000);
-
-    motorBackward(50);
-    delay(2000);
-
-    motorStop();
+    motorA(-20);
+    motorB(-20);
+    motorC(-20);
+    motorD(-20);
     delay(2000);
 }
