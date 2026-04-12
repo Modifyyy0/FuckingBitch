@@ -2,105 +2,43 @@
 #include <ftb.h>
 #include <Motor.h>
 
-Motor motor;
+RobotMovement robotMovement;
 
-void motorForwardA(int speed) {
-    setPWM(9, 0, 0);     
-    setPWM(10, 0, speed * 40);  
-    setPWM(8, 0, 4000);  
-}
-
-void motorBackwardA(int speed)
+void Motor::forward(int speed)
 {
-    setPWM(9, 0, speed * 40);  
-    setPWM(10, 0, 0);     
-    setPWM(8, 0, 4000);  
+    setPWM(pin1,0,0);
+    setPWM(pin2,0,speed * 40);
+    setPWM(enablePin,0,4000);
 }
 
-void motorForwardB(int speed) {
-    setPWM(11, 0, speed * 40);  
-    setPWM(12, 0, 0);     
-    setPWM(13, 0, 4000);  
-}
-
-void motorBackwardB(int speed)
+void Motor::backward(int speed)
 {
-    setPWM(11, 0, 0);     
-    setPWM(12, 0, speed * 40);  
-    setPWM(13, 0, 4000);  
+    setPWM(pin1,0,speed * 40);
+    setPWM(pin2,0,0);
+    setPWM(enablePin,0,4000);
 }
 
-void motorForwardC(int speed) {
-    setPWM(5, 0, speed * 40);  
-    setPWM(6, 0, 0);     
-    setPWM(7, 0, 4000);  
-}
-
-void motorBackwardC(int speed)
+void Motor::stop()
 {
-    setPWM(5, 0, 0);     
-    setPWM(6, 0, speed * 40);  
-    setPWM(7, 0, 4000);  
+    setPWM(pin1,0,0);
+    setPWM(pin2,0,0);
+    setPWM(enablePin,0,0);
 }
 
-void motorForwardD(int speed) {
-    setPWM(3, 0, 0);     
-    setPWM(4, 0, speed * 40);  
-    setPWM(2, 0, 4000);  
-}
-
-void motorBackwardD(int speed)
+void Motor::move(int speed)
 {
-    setPWM(3, 0, speed * 40);  
-    setPWM(4, 0, 0);
-    setPWM(2, 0, 4000);  
-}
-
-void motorA(int speed)
-{
-    if(speed < 0)
+    if(speed > 0)
     {
-        motorBackwardA(speed*-1);
+        this->forward(speed);
+    }
+    else if(speed < 0)
+    {
+        const int opposite_dir = -1;
+        this->backward(speed * opposite_dir);
     }
     else
     {
-        motorForwardA(speed);
-    }
-}
-
-void motorB(int speed)
-{
-    if(speed < 0)
-    {
-        motorBackwardB(speed*-1);
-    }
-    else
-    {
-        motorForwardB(speed);
-    }
-}
-
-void motorC(int speed)
-{
-    if(speed < 0)
-    {
-        motorBackwardC(speed*-1);
-    }
-    else
-    {
-        motorForwardC(speed);
-    }
-}
-
-void motorD(int speed)
-{
-    if(speed < 0)
-    {
-        motorBackwardD(speed*-1);
-    }
-    else
-    {
-        motorForwardD(speed);
+        stop();
     }
 }
 
@@ -109,15 +47,35 @@ int time(int distance, int speed)
     return speed / distance;
 }
 
-void Motor::moveY(int distance)
+void RobotMovement::moveX(int speed)
 {
-    if(distance == 0)return;
-    int direction = 1;
-    if(distance < 0)direction = -1;
-    
-    motorA(speed * direction);
-    motorB(speed * direction);
-    motorC(speed * direction);
-    motorD(speed * direction);
-    // delay(time(distance, motor.speed));
+    const int opposite_dir = -1;
+    motorA.move(speed);
+    motorB.move(speed * opposite_dir);
+    motorC.move(speed);
+    motorD.move(speed * opposite_dir);
+}
+
+void RobotMovement::moveY(int speed)
+{
+    motorA.move(speed);
+    motorB.move(speed);
+    motorC.move(speed);
+    motorD.move(speed);
+}
+
+void RobotMovement::moveDiagonal13(int speed)
+{
+    motorA.move(speed);
+    motorB.stop();
+    motorC.move(speed);
+    motorD.stop();
+}
+
+void RobotMovement::moveDiagonal24(int speed)
+{
+    motorA.stop();
+    motorB.move(speed);
+    motorC.stop();
+    motorD.move(speed);
 }

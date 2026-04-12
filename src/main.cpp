@@ -8,5 +8,5 @@ void setup() {
 }
 
 void loop() {
-    motor.moveY(100);
+    robotMovement.moveDiagonal24(-50);
 }
