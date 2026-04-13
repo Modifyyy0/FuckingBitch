@@ -55,4 +55,4 @@ void motorD(int speed);
 int time(int distance, RobotMovement& speed);
 
 extern RobotMovement robotMovement;
-extern Motor *motor1234[4];
+extern Motor *motors[4];

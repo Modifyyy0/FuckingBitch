@@ -19,7 +19,7 @@ namespace SerialDecoder {
     void handlePacket(uint8_t motorId, uint8_t opcode, int8_t value)
     {
         if (motorId >= 4) return;
-        Motor* m = motor1234[motorId];
+        Motor* m = motors[motorId];
         if (!m) return;
 
         switch ((Opcode)opcode)
