@@ -5,14 +5,16 @@ class Motor
     int pin1;
     int pin2;
     int enablePin;
+    int motorSpeed;
     public:
         Motor(){}
-        Motor(int p1, int p2, int enable)
-        : pin1(p1), pin2(p2), enablePin(enable)
+        Motor(int p1, int p2, int enable, int speed)
+        : pin1(p1), pin2(p2), enablePin(enable), motorSpeed(speed)
         {}
-        void forward(int speed);
-        void backward(int speed);
-        void move(int speed);
+        void forward();
+        void backward();
+        void setSpeed(int speed);
+        // void move(int distance);
         void stop();
 };
     
@@ -25,10 +27,10 @@ class RobotMovement
     public:
         RobotMovement()
         {
-            motorA = Motor(9, 10, 8);
-            motorB = Motor(12, 11, 13);
-            motorC = Motor(6, 5, 7);
-            motorD = Motor(3, 4, 2);
+            motorA = Motor(9, 10, 8, 50);
+            motorB = Motor(12, 11, 13, 50);
+            motorC = Motor(6, 5, 7, 50);
+            motorD = Motor(3, 4, 2, 50);
         }
         int speed = 100;
 

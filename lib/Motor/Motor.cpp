@@ -4,18 +4,23 @@
 
 RobotMovement robotMovement;
 
-void Motor::forward(int speed)
+void Motor::forward()
 {
     setPWM(pin1,0,0);
-    setPWM(pin2,0,speed * 40);
+    setPWM(pin2,0,this->motorSpeed * 40);
     setPWM(enablePin,0,4000);
 }
 
-void Motor::backward(int speed)
+void Motor::backward()
 {
-    setPWM(pin1,0,speed * 40);
+    setPWM(pin1,0,this->motorSpeed * 40);
     setPWM(pin2,0,0);
     setPWM(enablePin,0,4000);
+}
+
+void Motor::setSpeed(int speed)
+{
+    this->motorSpeed = speed;
 }
 
 void Motor::stop()
@@ -25,22 +30,24 @@ void Motor::stop()
     setPWM(enablePin,0,0);
 }
 
-void Motor::move(int speed)
-{
-    if(speed > 0)
-    {
-        this->forward(speed);
-    }
-    else if(speed < 0)
-    {
-        const int opposite_dir = -1;
-        this->backward(speed * opposite_dir);
-    }
-    else
-    {
-        stop();
-    }
-}
+//This function is a work in progress........
+// void Motor::move(int speed)
+// {
+//
+//     if(speed > 0)
+//     {
+//         this->forward(speed);
+//     }
+//     else if(speed < 0)
+//     {
+//         const int opposite_dir = -1;
+//         this->backward(speed * opposite_dir);
+//     }
+//     else
+//     {
+//         stop();
+//     }
+// }
 
 int time(int distance, int speed)
 {
