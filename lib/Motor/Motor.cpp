@@ -3,7 +3,7 @@
 #include <Motor.h>
 
 RobotMovement robotMovement;
-Motor *motor1234[4];
+Motor *motors[4];
 
 void Motor::forward()
 {
@@ -21,11 +21,17 @@ void Motor::backward()
 
 void Motor::setSpeed(int speed)
 {
+    Serial.print("This pin1 ");
+    Serial.print(this->pin1);
+    Serial.print(" changed speed to ");
+    Serial.print(speed);
     this->motorSpeed = speed;
 }
 
 void Motor::stop()
 {
+    Serial.print("This pin1 is stopping:");
+    Serial.println(this->pin1);
     setPWM(pin1,0,0);
     setPWM(pin2,0,0);
     setPWM(enablePin,0,0);
@@ -57,10 +63,10 @@ int time(int distance, int speed)
 
 void RobotMovement::motorsInit()
 {
-    motor1234[0] = &robotMovement.motorA;
-    motor1234[1] = &robotMovement.motorB;
-    motor1234[2] = &robotMovement.motorC;
-    motor1234[3] = &robotMovement.motorD;
+    motors[0] = &robotMovement.motorA;
+    motors[1] = &robotMovement.motorB;
+    motors[2] = &robotMovement.motorC;
+    motors[3] = &robotMovement.motorD;
 }
 
 void RobotMovement::moveX(int speed)
