@@ -21,11 +21,17 @@ void Motor::backward()
 
 void Motor::setSpeed(int speed)
 {
+    Serial.print("This pin1 ");
+    Serial.print(this->pin1);
+    Serial.print(" changed speed to ");
+    Serial.print(speed);
     this->motorSpeed = speed;
 }
 
 void Motor::stop()
 {
+    Serial.print("This pin1 is stopping:");
+    Serial.println(this->pin1);
     setPWM(pin1,0,0);
     setPWM(pin2,0,0);
     setPWM(enablePin,0,0);
